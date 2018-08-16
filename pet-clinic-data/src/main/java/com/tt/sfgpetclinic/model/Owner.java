@@ -1,12 +1,31 @@
 package com.tt.sfgpetclinic.model;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
+
+    // Because of Owner class extends from another class we need to declare constructor manually for access extended class properties (id, firstName and lastName).
+    // And we don't add pets because we already create a HashSet for pets variable.
+    // Normally we can use @AllArgsConstructor and Builder on top
+    @Builder
+    public Owner(String firstName, String lastName, String address, String city, String telephone) {
+        super(firstName, lastName);
+        this.address = address;
+        this.city = city;
+        this.telephone = telephone;
+    }
 
     @Column(name = "address")
     private String address;
@@ -19,36 +38,4 @@ public class Owner extends Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public Set<Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(Set<Pet> pets) {
-        this.pets = pets;
-    }
 }

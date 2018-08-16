@@ -54,18 +54,20 @@ public class DataLoader implements CommandLineRunner {
         dentistry.setDescription("Dentistry");
         Speciality savedDentistry = specialityService.save(dentistry);
 
-        Owner owner1 = new Owner();
-        owner1.setFirstName("Micheal");
-        owner1.setLastName("Weston");
-        owner1.setAddress("123 Brickerel");
-        owner1.setCity("Miami");
-        owner1.setTelephone("12321321321312");
+        Owner owner1 = Owner.builder()
+                .firstName("Micheal")
+                .lastName("Weston")
+                .address("123 Brickerel")
+                .city("Miami")
+                .telephone("12321321321312")
+                .build();
 
-        Pet michealPet = new Pet();
-        michealPet.setName("ZuuZuu");
-        michealPet.setPetType(savedDogPetType);
-        michealPet.setBirthDate(LocalDate.now());
-        michealPet.setOwner(owner1);
+        Pet michealPet = Pet.builder()
+                .name("ZuuZuu")
+                .petType(savedDogPetType)
+                .birthDate(LocalDate.now())
+                .owner(owner1)
+                .build();
         owner1.getPets().add(michealPet);
 
         ownerService.save(owner1);
